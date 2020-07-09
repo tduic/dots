@@ -3,23 +3,17 @@ import ReactDOM from "react-dom";
 import Sketch from "react-p5";
 import "./styles.css";
 import Dot from "./Dot";
+import P5 from "p5";
 
 class App extends React.Component {
     dot;
 
     setup = (p5, parentRef) => {
-        p5.createCanvas(4000, 4000).parent(parentRef);
+        p5.createCanvas(600, 600).parent(parentRef);
         this.dot = new Dot(p5);
-        this.dot.pos = [p5.width / 2, p5.height / 2];
-        this.dot.vel = [0, 0];
-        this.dot.acc = [0, 0];
-        // this.dot.pos = p5.createVector(p5.width / 2, p5.height / 2);
-        // this.dot.pos.x = p5.width / 2;
-        // this.dot.pos.y = p5.height / 2;
-        // this.dot.vel = p5.createVector(0, 0);
-        // this.dot.vel.x = 0;
-        // this.dot.vel.y = 0;
-        // this.dot.acc = p5.createVector(0, 0);
+        this.dot.pos = new P5.Vector(p5.width / 2, p5.height - 10);
+        this.dot.vel = new P5.Vector(1, 0);
+        this.dot.acc = new P5.Vector(0, 1);
     };
 
     draw = () => {
