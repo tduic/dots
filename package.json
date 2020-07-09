@@ -1,5 +1,5 @@
 {
-  "name": "react-p5",
+  "name": "dots2",
   "version": "1.0.0",
   "description": "A react p5 wrapper component!",
   "keywords": [
@@ -9,12 +9,12 @@
   ],
   "main": "src/index.js",
   "dependencies": {
-    "p5": "1.0.0",
-    "prettier": "2.0.5",
-    "react": "16.8.3",
-    "react-dom": "16.8.3",
-    "react-p5": "1.3.0",
-    "react-scripts": "2.1.8"
+    "p5": "^1.0.0",
+    "prettier": "^2.0.5",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-p5": "^1.3.0",
+    "react-scripts": "^2.1.8"
   },
   "devDependencies": {
     "typescript": "3.3.3"
