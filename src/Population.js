@@ -1,15 +1,16 @@
 import Dot from "./Dot";
 
 class Population {
-    constructor(p5, size, goal, obstacle) {
+    constructor(p5, size, goal, obstacles) {
         this.p5 = p5;
         this.dots = [];
         this.popSize = size;
         this.goal = goal;
-        this.obstacle = obstacle;
+        this.obstacles = obstacles;
         this.fitnessSum = 0;
         this.gen = 0;
         this.bestDot = 0;
+        this.firstDot = -1;
         this.minStep = Number.MAX_SAFE_INTEGER;
         this.initialize();
     }
@@ -17,7 +18,7 @@ class Population {
     initialize() {
         // initialize population by adding popSize num of dots into array
         for (let i = 0; i < this.popSize; i++) {
-            this.dots.push(new Dot(this.p5, this.goal, this.obstacle));
+            this.dots.push(new Dot(this.p5, this.goal, this.obstacles));
         }
     }
 
@@ -42,6 +43,8 @@ class Population {
     allDotsDead() {
         // return true if all dots are dead or have reached goal
         for (let i = 0; i < this.dots.length; i++) {
+            if (this.dots[i].reachedGoal && this.firstDot === -1)
+                this.firstDot = i;
             if (!(this.dots[i].dead || this.dots[i].reachedGoal)) return false;
         }
         return true;
@@ -58,7 +61,7 @@ class Population {
 
     getChild(parent) {
         // create new child with same brain as parent
-        let child = new Dot(this.p5, this.goal, this.obstacle);
+        let child = new Dot(this.p5, this.goal, this.obstacles);
         child.brain.clone(parent);
         return child;
     }
@@ -91,6 +94,7 @@ class Population {
         this.bestDot = maxIndex;
         if (this.dots[this.bestDot].reachedGoal) {
             this.minStep = this.dots[this.bestDot].brain.step;
+            if (this.minStep === 400) this.bestDot = this.firstDot;
             console.log(`best is ${this.minStep} steps`);
         }
     }

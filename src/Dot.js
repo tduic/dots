@@ -1,8 +1,9 @@
 import Brain from "./Brain";
+import { Ellipse } from "./Obstacles";
 import P5 from "p5";
 
 class Dot {
-    constructor(p5, goal, obstacle) {
+    constructor(p5, goal, obstacles) {
         this.p5 = p5;
         this.pos = new P5.Vector(p5.width / 2, p5.height - 10);
         this.vel = new P5.Vector(0, 0);
@@ -11,7 +12,7 @@ class Dot {
         this.dead = false;
         this.reachedGoal = false;
         this.goal = goal;
-        this.obstacle = obstacle;
+        this.obstacles = obstacles;
         this.fitness = 0;
         this.isBest = false;
     }
@@ -36,8 +37,17 @@ class Dot {
         }
 
         this.vel.add(this.acc);
-        this.vel.limit(20);
+        this.vel.limit(10);
         this.pos.add(this.vel);
+    }
+
+    checkObstacles(ob) {
+        return ob instanceof Ellipse
+            ? this.p5.dist(this.pos.x, this.pos.y, ob.pos.x, ob.pos.y) < 7
+            : this.pos.x >= ob.p1.x &&
+                  this.pos.y >= ob.p1.y - 5 &&
+                  this.pos.x <= ob.p2.x &&
+                  this.pos.y <= ob.p2.y + 5;
     }
 
     update() {
@@ -59,15 +69,11 @@ class Dot {
                 ) < 5
             ) {
                 this.reachedGoal = true;
-            } else if (
-                this.p5.dist(
-                    this.pos.x,
-                    this.pos.y,
-                    this.obstacle.pos.x,
-                    this.obstacle.pos.y
-                ) < 5
-            ) {
-                this.dead = true;
+            } else {
+                // eslint-disable-next-line
+                this.obstacles.map((e) => {
+                    this.dead = this.dead || this.checkObstacles(e);
+                });
             }
         }
     }
