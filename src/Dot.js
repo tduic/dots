@@ -1,9 +1,8 @@
 import Brain from "./Brain";
-// import Goal from "./Goal";
 import P5 from "p5";
 
 class Dot {
-    constructor(p5, goal) {
+    constructor(p5, goal, obstacle) {
         this.p5 = p5;
         this.pos = new P5.Vector(p5.width / 2, p5.height - 10);
         this.vel = new P5.Vector(0, 0);
@@ -12,12 +11,19 @@ class Dot {
         this.dead = false;
         this.reachedGoal = false;
         this.goal = goal;
+        this.obstacle = obstacle;
         this.fitness = 0;
+        this.isBest = false;
     }
 
     show() {
-        this.p5.fill(0);
-        this.p5.ellipse(this.pos.x, this.pos.y, 4, 4);
+        if (this.isBest) {
+            this.p5.fill(0, 0, 255);
+            this.p5.ellipse(this.pos.x, this.pos.y, 8, 8);
+        } else {
+            this.p5.fill(0);
+            this.p5.ellipse(this.pos.x, this.pos.y, 4, 4);
+        }
     }
 
     move() {
@@ -30,7 +36,7 @@ class Dot {
         }
 
         this.vel.add(this.acc);
-        this.vel.limit(5);
+        this.vel.limit(20);
         this.pos.add(this.vel);
     }
 
@@ -53,6 +59,15 @@ class Dot {
                 ) < 5
             ) {
                 this.reachedGoal = true;
+            } else if (
+                this.p5.dist(
+                    this.pos.x,
+                    this.pos.y,
+                    this.obstacle.pos.x,
+                    this.obstacle.pos.y
+                ) < 5
+            ) {
+                this.dead = true;
             }
         }
     }

@@ -13,7 +13,7 @@ class Brain {
     }
 
     clone(parent) {
-        this.directions = parent.brain.directions;
+        this.directions = [...parent.brain.directions];
     }
 
     mutate() {
