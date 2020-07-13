@@ -22,7 +22,6 @@ class App extends React.Component {
         this.obstacles.push(new Line(0, 600, 800, 800));
         this.obstacles.push(new Line(400, 1000, 500, 500));
         this.obstacles.push(new Line(0, 600, 200, 200));
-        console.log(this.obstacles);
     };
 
     setup = (p5, parentRef) => {
