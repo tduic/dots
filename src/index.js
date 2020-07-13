@@ -11,7 +11,7 @@ class App extends React.Component {
     goal;
     obstacles = [];
 
-    setObstacles(p5) {
+    setObstacles = (p5) => {
         // for (let i = 0; i < num; i++) {
         //     const rw = Math.floor(Math.random() * p5.width);
         //     const rh = Math.floor(Math.random() * p5.height);
@@ -23,7 +23,7 @@ class App extends React.Component {
         this.obstacles.push(new Line(400, 1000, 500, 500));
         this.obstacles.push(new Line(0, 600, 200, 200));
         console.log(this.obstacles);
-    }
+    };
 
     setup = (p5, parentRef) => {
         p5.createCanvas(1000, 1000).parent(parentRef);
@@ -38,18 +38,18 @@ class App extends React.Component {
         this.test = new Population(p5, 2000, this.goal, this.obstacles);
     };
 
-    drawEllipse(p5, e) {
+    drawEllipse = (p5, e) => {
         p5.stroke(0, 0, 0);
         p5.strokeWeight(1);
         p5.fill(255, 0, 0);
         p5.ellipse(e.pos.x, e.pos.y, 10, 10);
-    }
+    };
 
-    drawLine(p5, e) {
+    drawLine = (p5, e) => {
         p5.stroke(255, 0, 0);
         p5.strokeWeight(10);
         p5.line(e.p1.x, e.p1.y, e.p2.x, e.p2.y);
-    }
+    };
 
     draw = (p5) => {
         p5.background(220);
